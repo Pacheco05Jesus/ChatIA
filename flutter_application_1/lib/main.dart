@@ -12,7 +12,12 @@ import 'Vistas/Carga.dart';
 import 'Vistas/Succes1.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(
+    BlocProvider(
+      create: (_) => ChatBloc(openAIService: OpenAIService()),
+      child: const MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
@@ -23,13 +28,11 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'ChatIA',
       debugShowCheckedModeBanner: false,
-      home: BlocProvider(
-        create: (_) => ChatBloc(openAIService: OpenAIService()),
-        child: const ChatScreen(),
-      ),
+      home: Inicial(),
     );
   }
 }
+
 
 class ChatScreen extends StatefulWidget {
   const ChatScreen({super.key});

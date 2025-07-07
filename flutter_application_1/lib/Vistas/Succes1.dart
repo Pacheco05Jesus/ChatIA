@@ -7,6 +7,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'ChatIA',
+
       theme: ThemeData(primarySwatch: Colors.green),
       home: Succes1(response: 'Hola soy ChatIA'),
     );
@@ -42,7 +43,7 @@ class _Succes1State extends State<Succes1> {
 
   @override
   void dispose() {
-    _controller.dispose(); 
+    _controller.dispose();
     super.dispose();
   }
 
@@ -70,8 +71,8 @@ class _Succes1State extends State<Succes1> {
         constraints: BoxConstraints(maxWidth: 250),
         decoration: BoxDecoration(
           color: message.isMe
-              ? const Color.fromARGB(255, 3, 238, 46)
-              : Colors.white,
+              ? const Color.fromARGB(255, 3, 238, 46) // Verde para el usuario
+              : Colors.grey[800], // Gris oscuro para el bot
           borderRadius: BorderRadius.circular(16),
         ),
         child: Column(
@@ -83,13 +84,13 @@ class _Succes1State extends State<Succes1> {
               message.text,
               style: TextStyle(
                 fontSize: 16,
-                color: message.isMe ? Colors.black : Colors.black,
+                color: message.isMe ? Colors.black : Colors.white, // Texto
               ),
             ),
             SizedBox(height: 4),
             Text(
               time,
-              style: TextStyle(fontSize: 10, color: Colors.black54),
+              style: TextStyle(fontSize: 10, color: Colors.white70),
             ),
           ],
         ),
@@ -107,8 +108,12 @@ class _Succes1State extends State<Succes1> {
               child: TextField(
                 controller: _controller,
                 onSubmitted: _sendMessage,
+                style: TextStyle(color: Colors.black), // Texto dentro del campo
                 decoration: InputDecoration(
+                  filled: true,
+                  fillColor: Colors.white, // Fondo blanco del campo
                   hintText: 'Escribe un mensaje...',
+                  hintStyle: TextStyle(color: Colors.grey[600]),
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(20),
                   ),
@@ -130,22 +135,30 @@ class _Succes1State extends State<Succes1> {
     );
   }
 
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: Text('ChatIA')),
-      body: Column(
-        children: [
-          Expanded(
-            child: ListView.builder(
-              reverse: true,
-              itemCount: _messages.length,
-              itemBuilder: (context, index) => _buildMessage(_messages[index]),
-            ),
-          ),
-          _buildInputArea(),
-        ],
+@override
+Widget build(BuildContext context) {
+  return Scaffold(
+    backgroundColor: Colors.black,
+    appBar: AppBar(
+      backgroundColor: Colors.black,
+      title: Text(
+        'ChatIA',
+        style: TextStyle(color: Colors.white),
       ),
-    );
-  }
+      iconTheme: IconThemeData(color: Colors.white),
+    ),
+    body: Column(
+      children: [
+        Expanded(
+          child: ListView.builder(
+            reverse: true,
+            itemCount: _messages.length,
+            itemBuilder: (context, index) => _buildMessage(_messages[index]),
+          ),
+        ),
+        _buildInputArea(),
+      ],
+    ),
+  );
+}
 }
